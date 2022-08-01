@@ -12,9 +12,8 @@ I'm assuming you already have Garfield and CERN root packages installed. My vers
 
 The old version of Garfield has a very detailed manual for all supported commands. Just in case, here are a couple of links to the same thing:
 
-[official Garfield help](https://garfield.web.cern.ch/help/)
-
-[alternative source for link above](https://cmd.inp.nsk.su/old/cmd2/manuals/cernlib/garfield/help/garfield.html)
+- [official Garfield help](https://garfield.web.cern.ch/help/)
+- [alternative source for link above](https://cmd.inp.nsk.su/old/cmd2/manuals/cernlib/garfield/help/garfield.html)
 
 #### Running Garfield in batch mode
 
