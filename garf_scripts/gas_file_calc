@@ -1,0 +1,32 @@
+global file_name=`gas_mix_for_Temur_light`
+global pr_name file_name/`.print`
+global file_name file_name/`.gas`
+
+global temp=25       //temperature Celsius
+global pressure=1 // atm
+global max_field=200000 // V/cm
+
+Global Ar=70
+Global CO2=30
+
+******************
+        &MAGNETIC
+******************
+
+COMP 0 0 1.5 T
+
+******************
+        &GAS
+******************
+
+temperature {temp} C
+pressure {pressure} atm
+
+magboltz Ar {Ar} CO2 {CO2} e-field-range 10 {max_field} n-e 30 collisions 5
+heed Ar {Ar} CO2 {CO2}
+write {file_name}
+
+opt gas-print
+> {pr_name}
+
+&STOP
