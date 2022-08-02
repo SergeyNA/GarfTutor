@@ -1,0 +1,93 @@
+global R=0.3          // cm anode wire spacing
+Global a_diam=0.003   // anode diameter
+global Vc=0           // cath voltage
+global Va=1650        // anode voltage
+
+global penn=60
+global rtube={R}
+global tr_count=50000
+global tr_z=0
+global shift_a=0.0
+global sagging=0.0
+
+global gas_file `gas_mix_noMagnet_simple_tube.gas`
+global sig_name=`/anfs/tmp/nasyb_sa/tube_6mm/uniformTrack_1GeV`
+
+*******************
+        &CELL
+*******************
+cell-id "Simple_6mm_tube"
+
+tube r={R} v={Vc}
+
+rows
+s 1 {a_diam} 0.0 {sagging} {Va}
+
+******************
+        &GAS
+******************
+
+get {gas_file}
+*opt gas-plot
+
+Vector E_Ar_Ar K_Ar_Ar
+   0  1.53
+   8  1.53
+  10  1.53
+  12  1.53
+  15  1.52
+  20  1.51
+  25  1.49
+  30  1.47
+  40  1.44
+  50  1.41
+  60  1.38
+  80  1.32
+ 100  1.27
+ 120  1.22
+ 150  1.16
+ 200  1.06
+ 250  0.99
+ 300  0.95
+ 400  0.85
+ 500  0.78
+ 600  0.72
+ 800  0.63
+1000  0.56
+1200  0.51
+1500  0.46
+2000  0.40
+
+Global E_Ar_Ar = E_Ar_Ar*250/720
+Global K_Ar_Ar = K_Ar_Ar*0.000001
+
+add ion-mobility K_Ar_Ar vs E_Ar_Ar
+extrapolation low-ion-mobility constant high-ion-mobility linear
+
+**************
+&OPTIMISE
+**************
+
+penning Ar* {penn}
+
+**************
+&SIGNAL
+**************
+
+Area -0.4 -0.4 0.4 0.4
+Window 0 0.00025
+avalanche exp 45000
+sel s
+
+FOR i FROM 1 TO tr_count DO
+
+global tr_coord = 0.6*rnd_uniform-0.3
+*say "NEW TR COORD"
+*say "{tr_coord} <-here"
+track {-sqrt(rtube^2-tr_coord^2), tr_coord, sqrt(rtube^2-tr_coord^2), tr_coord} muon energy 1 GeV
+Signal avalanche average-signal 2 new noattachment electron-pulse ION-PULSE DETAILED-ION-TAIL
+write-signals file="{sig_name}_TrN_{i}.sig" units ampere second format SORIN
+
+ENDDO
+
+&STOP
