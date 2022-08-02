@@ -25,11 +25,11 @@ garfield-9 < File_name_with_list_of_Garfield_instructions > File_name_with_Garfi
 
 #### Disk space quota
 
-During each run, Garfield creates log files named 1 and 2, making a backup of the files of the same name if they already exist. If your task requires a large amount of computing resources, then the size of these files will also be large. If you are worried about the amount of free disk space, then you need to clean up these files yourself.
+During each run, Garfield creates log files named `garflast.dat` and `GKS_error.log`, making a backup of the files of the same name if they already exist. If your task requires a large amount of computing resources, then the size of these files will also be large. If you are worried about the amount of free disk space, then you need to clean up these files yourself.
 
 #### Gas file creation
 
-Before run any calculation in `&DRIFT` or `&SIGNAL` sections One should fill gas properties tables. There is many ways how to do it includint runtime calculations but I recommend using a pre-generated gas file with the required information. [Here](https://github.com/SergeyNA/GarfTutor/blob/main/garf_scripts/gas_file_calc) you can find the example script for creating *.gas file with filled gas properties tables for case with active magnetic field in my analysis.
+Before run any calculation in `&DRIFT` or `&SIGNAL` sections you should fill gas properties tables. There is many ways how to do it includint runtime calculations but I recommend using a pre-generated gas file with the required information. [Here](https://github.com/SergeyNA/GarfTutor/blob/main/garf_scripts/gas_file_calc) you can find the example script for creating *.gas file with filled gas properties tables for case with active magnetic field in my analysis.
 
 If you want to create a similar file for another gas mixture, then pay attention to the following parameters:
 
@@ -122,11 +122,11 @@ Currently noise impact do not consider
 
 ## Getting induced signals
 
-[Here](https://github.com/SergeyNA/GarfTutor/blob/main/garf_scripts/induced_signals_gen) is garfield script example for generating 50000 ++pure++^*1^ anode signals in 6 mm SPD straw tube from uniformly distributed initial ++ionization particles++^*2^ and saving it to the ++public folder++^*3^.
+[Here](https://github.com/SergeyNA/GarfTutor/blob/main/garf_scripts/induced_signals_gen) is garfield script example for generating 50000 <ins>pure</ins><sup>*1</sup> anode signals in 6 mm SPD straw tube from uniformly distributed initial <ins>ionization particles</ins><sup>*2</sup> and saving it to the <ins>public folder</ins><sup>*3</sup>.
 
-1. ==pure signals== means "only induced signals on the anode wire, without noise and without influence of readout electronics"
-2. ==ionization particles== is a 1 GeV muon in perpendicular to the tube plane with uniformly distributed distance (with sign) to the anode wire from -rtube to +rtube
-3. ==public folder== on a server with restricted access
+1. `pure signals` means "only induced signals on the anode wire, without noise and without influence of readout electronics"
+2. `ionization particles` is a 1 GeV muon in perpendicular to the tube plane with uniformly distributed distance (with sign) to the anode wire from -rtube to +rtube
+3. `public folder` on a server with restricted access
 
 ##  Repeating the analysis for any tube
 
