@@ -23,6 +23,10 @@ Use `garfield-9` command for running interactive Garfield interface. But I prefe
 garfield-9 < File_name_with_list_of_Garfield_instructions > File_name_with_Garfield_output_log
 ```
 
+#### Disk space quota
+
+During each run, Garfield creates log files named 1 and 2, making a backup of the files of the same name if they already exist. If your task requires a large amount of computing resources, then the size of these files will also be large. If you are worried about the amount of free disk space, then you need to clean up these files yourself.
+
 #### Gas file creation
 
 Before run any calculation in `&DRIFT` or `&SIGNAL` sections One should fill gas properties tables. There is many ways how to do it includint runtime calculations but I recommend using a pre-generated gas file with the required information. [Here](https://github.com/SergeyNA/GarfTutor/blob/main/garf_scripts/gas_file_calc) you can find the example script for creating *.gas file with filled gas properties tables for case with active magnetic field in my analysis.
@@ -96,7 +100,7 @@ penning Ar* {penn} // still measured value
 
 #### Transfer function
 
-The program calculates the induced signal to the electrode. Readout electronics always make changes in reality. To simulate this effect, the convolution of the original induced signal with the transfer function is used. In my analysis, for greater realism, the LTspice package is used for these purposes. Therefore, the following code will save the data of the induced current to the anode wire.
+Garfield calculates the induced signal to the electrode. Readout electronics always make changes in reality. To simulate this effect, the convolution of the original induced signal with the transfer function is used. In my analysis, for greater realism, the LTspice package is used for these purposes. Therefore, the following code will save the data of the induced current to the anode wire.
 
 ```
 **************
@@ -115,6 +119,26 @@ write-signals file="{sig_name}" units ampere second format SORIN
 #### Noise
 
 Currently noise impact do not consider
+
+## Getting induced signals
+
+[Here](https://github.com/SergeyNA/GarfTutor/blob/main/garf_scripts/induced_signals_gen) is garfield script example for generating 50000 ++pure++^*1^ anode signals in 6 mm SPD straw tube from uniformly distributed initial ++ionization particles++^*2^ and saving it to the ++public folder++^*3^.
+
+1. ==pure signals== means "only induced signals on the anode wire, without noise and without influence of readout electronics"
+2. ==ionization particles== is a 1 GeV muon in perpendicular to the tube plane with uniformly distributed distance (with sign) to the anode wire from -rtube to +rtube
+3. ==public folder== on a server with restricted access
+
+##  Repeating the analysis for any tube
+
+If you want to create a response parameterization of straw tube detector using Garfield on a base of my analysis here is step by step instruction:
+
+1. Generate a gas file for your detector's mixture
+1. Choose a parameter for parameterization dependence and fixed all another variation values
+1. Generate in Garfield statistically enough amount of signals for chosen case
+1. Process the received signals in LTspice
+1. Determine the detector response in functional form
+1. Repeat steps above for each discrete parameter value in p.#2 inside chosen interval
+1. Create general parameterization for any value inside chosen interval
 
 ## Known Issues
 
