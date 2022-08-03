@@ -208,7 +208,33 @@ After processing by LTspice we get signal files with the content as in the pictu
 
 ![spice text file with signal data](https://github.com/SergeyNA/GarfTutor/blob/main/img/spice_sig_file_format.png?raw=true)
 
-##  Repeating the analysis for any tube
+## Mathematical description of the response
+
+Even if we pass completely identical particles through the detector along the same trajectory, we will receive different signals at the output of the electronics due to random processes of the development of an electron avalanche. Therefore, we need to get a mathematical law that will correspond to the answer of the detector. The picture below shows an example of many hundreds of niseless signals from the same tracks.
+
+![spice signal collection](https://github.com/SergeyNA/GarfTutor/blob/main/img/plot_spice_collection.png)
+
+When we have accumulated enough SPICE processed signals we can proceed to the functional description of the detector response. The next step is to add white Gaussian noise to each of these signals. For clarity, we will skip this step. Then we must determine the detector response time for each of these signals. This happens at the moment of crossing the threshold, the value of which we must determine in advance. There are other ways to obtain a response, for example, the time of the signal maximum or the threshold value that is functionally dependent on the amplitude, but as tests show, they lead to a higher error. Therefore, in my analysis, I always used a constant threshold value. The statistics of time crossing for constant threshold is shown in the histogram below.
+
+![hist with blob of spice signal response](https://github.com/SergeyNA/GarfTutor/blob/main/img/time_crossing_hist_fit.png?raw=true)
+
+The better we describe the data of this histogram with a random distribution, the more realistic our representation of the detector response will be. I used the standard functionality provided by the root package for fitting. [Here](https://github.com/SergeyNA/GarfTutor/blob/main/cpp/get_shaper_signal_params.cpp) is a root script capable of building such histograms based on a set of spice signals.
+
+## Parameter values used in my simulation
+
+![hist with blob of spice signal response](https://github.com/SergeyNA/GarfTutor/blob/main/img/paremeter_sheme.png?raw=true)
+
++ straw diameter: 10 mm
++ anode diameter: 30 mkm
++ high voltage: 1750 V
++ gas mixture: Ar+CO<sub>2</sub> / 70:30 (%)
++ gas temperature: 25 celsius // it's better to use 20 celsius for your simulation
++ gas pressure: 1 atmosphere
++ ionization particle: 1 GeV muon
++ track angle alpha: 90° and 14°
++ Magnetic field: none and 1.5 Tesla along anode wire (z-axis in Garfield coordinates)
+
+## Repeating the analysis for any tube
 
 If you want to create a response parameterization of straw tube detector using Garfield on a base of my analysis here is step by step instruction:
 
