@@ -234,6 +234,20 @@ The better we describe the data of this histogram with a random distribution, th
 + track angle alpha: 90° and 14°
 + Magnetic field: none and 1.5 Tesla along anode wire (z-axis in Garfield coordinates)
 
+## Scripts used in simulation
+
+### Collection of all induced signals to the one plot
+
+[Here](https://github.com/SergeyNA/GarfTutor/blob/main/cpp/get_average_garf_signal.cpp) is a root script wich read N garfield signal files and plot the data on the same 2D hist. The output result is shown in the picture below.
+
+![hist with all induced signal datapoints](https://github.com/SergeyNA/GarfTutor/blob/main/img/garf_sig_collection.png?raw=true)
+
+### Second cluster drift time distribution
+
+[Here](https://github.com/SergeyNA/GarfTutor/blob/main/cpp/get_second_drift_time.cpp) is a root script for parsing garfield output while signals are generated. It analise all [cluster tables](https://github.com/SergeyNA/GarfTutor/blob/main/howto.md#cluster-info) in input file and save second minimal (and minimal too, but do not plot) drift time value for each signal and plot it as shown below. 
+
+![hist with second minimum drift time](https://github.com/SergeyNA/GarfTutor/blob/main/img/second_cluster_drift_time.png?raw=true)
+
 ## Repeating the analysis for any tube
 
 If you want to create a response parameterization of straw tube detector using Garfield on a base of my analysis here is step by step instruction:
@@ -248,4 +262,4 @@ If you want to create a response parameterization of straw tube detector using G
 
 ## Known Issues
 
-GasGain wrong calc; Missmatch Garfield and Garfield++; Transfer Function for Garfield++
+GasGain wrong calc; Missmatch Garfield and Garfield++; Transfer Function for Garfield++; Sigma value for strong magnetic field case is better
